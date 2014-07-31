@@ -18,13 +18,15 @@ class Game(object):
     def __init__(self, balls=''):
         self.balls = balls
 
-    def _ball_to_value(self, ball):
+    def _ball_to_value(self, ball, previous=None):
         # turn a string representing a ball's score into an integer
         try:
             ball_score = int(ball)
         except ValueError as e:
             if ball.lower() == 'x':
                 return 10
+            if ball == '/':
+                return 10 - previous
             message = ("{} is not a valid score for a ball".format(ball))
             raise type(e)(message)
         else:
@@ -32,7 +34,13 @@ class Game(object):
 
     def _make_balls_array(self):
         # turn the string into an array of integers
-        return [self._ball_to_value(x) for x in self.balls]
+        balls_array = []
+        previous = None
+        for x in self.balls:
+            ball_score = self._ball_to_value(x, previous)
+            previous = ball_score
+            balls_array.append(ball_score)
+        return balls_array
 
     def calculate_score(self):
         return self._score_loop(score=0, frame=1, balls=self._make_balls_array())
