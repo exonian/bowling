@@ -13,22 +13,3 @@ class Game(object):
 
     def __init__(self, balls=''):
         self.balls = balls
-
-    def get_frames(self):
-        # make frames from the balls, each frame being a list of balls
-        frames = []
-        for i in self.balls:
-            try:
-                previous = frames[-1]
-            except IndexError:
-                # this is the first frame, so start a new frame
-                frames.append([i])
-            else:
-                if len(frames[-1]) == 2 or frames[-1][0] == 'X':
-                    # previous frame has two balls or was a strike
-                    # so start a new frame
-                    frames.append([i])
-                else:
-                    # this ball is part of the previous frame
-                    frames[-1].append(i)
-        return frames
