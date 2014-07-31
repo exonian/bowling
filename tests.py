@@ -70,8 +70,20 @@ class CalculatesScoresAccurately(unittest.TestCase):
         score, frame = game.calculate_score()
         self.assertEqual(score, 99)
 
+    def testTheSlashSpare(self):
+        balls = '9/817263544536271809' # frame one is a spare
+        game = Game(balls)
+        score, frame = game.calculate_score()
+        self.assertEqual(score, 99)
+
     def testAllSpares(self):
         balls = '919182736455463728197' # includes bonus ball
+        game = Game(balls)
+        score, frame = game.calculate_score()
+        self.assertEqual(score, 152)
+
+    def testAllSlashSpares(self):
+        balls = '9/8/7/6/5/4/3/2/1/0/7' # includes bonus ball
         game = Game(balls)
         score, frame = game.calculate_score()
         self.assertEqual(score, 152)
