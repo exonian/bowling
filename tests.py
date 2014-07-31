@@ -86,7 +86,31 @@ class CalculatesScoresAccurately(unittest.TestCase):
         balls = '9/8/7/6/5/4/3/2/1/0/7' # includes bonus ball
         game = Game(balls)
         score, frame = game.calculate_score()
-        self.assertEqual(score, 152)
+        self.assertEqual(score, 143)
+
+    def testStrike(self):
+        balls = 'X340000000000000000'
+        game = Game(balls)
+        score, frame = game.calculate_score()
+        self.assertEqual(score, 24)
+
+    def testFinalStrikeAnticlimax(self):
+        balls = '000000000000000000X00' # includes bonus balls
+        game = Game(balls)
+        score, frame = game.calculate_score()
+        self.assertEqual(score, 10)
+
+    def testFinalStrikeComeback(self):
+        balls = '000000000000000000XXX' # includes bonus balls
+        game = Game(balls)
+        score, frame = game.calculate_score()
+        self.assertEqual(score, 30)
+
+    def testPerfectGame(self):
+        balls = 'XXXXXXXXXXXX' # includes bonus balls
+        game = Game(balls)
+        score, frame = game.calculate_score()
+        self.assertEqual(score, 300)
 
 
 def main():
