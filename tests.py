@@ -1,6 +1,6 @@
 import unittest
 
-from score import Game
+from score import Game, InvalidFrame
 
 
 class SetsBalls(unittest.TestCase):
@@ -37,6 +37,17 @@ class MakesBallsArray(unittest.TestCase):
         balls = 'O3200715'
         game = Game(balls)
         self.assertRaises(ValueError, game._make_balls_array)
+
+
+class CatchesBadFramesArray(unittest.TestCase):
+
+    def testStrikeAsSecondBall(self):
+        game = Game('343X3')
+        self.assertRaises(InvalidFrame, game.calculate_score)
+
+    def testTwoBallsOverTen(self):
+        game = Game('3547')
+        self.assertRaises(InvalidFrame, game.calculate_score)
 
 
 def main():
