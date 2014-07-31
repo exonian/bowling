@@ -50,6 +50,33 @@ class CatchesBadFramesArray(unittest.TestCase):
         self.assertRaises(InvalidFrame, game.calculate_score)
 
 
+class CalculatesScoresAccurately(unittest.TestCase):
+
+    def testAllOpenFrames(self):
+        balls = '90817263544536271809'
+        game = Game(balls)
+        score, frame = game.calculate_score()
+        self.assertEqual(score, 90)
+
+    def testIgnoreExtraneousBalls(self):
+        balls = '90817263544536271809666'
+        game = Game(balls)
+        score, frame = game.calculate_score()
+        self.assertEqual(score, 90)
+
+    def testTheSpare(self):
+        balls = '91817263544536271809' # frame one is a spare
+        game = Game(balls)
+        score, frame = game.calculate_score()
+        self.assertEqual(score, 99)
+
+    def testAllSpares(self):
+        balls = '919182736455463728197' # includes bonus ball
+        game = Game(balls)
+        score, frame = game.calculate_score()
+        self.assertEqual(score, 152)
+
+
 def main():
     unittest.main()
 
